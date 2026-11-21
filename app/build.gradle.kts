@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    // For Navigation (type safety)
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -32,6 +34,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -42,4 +48,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+
+    val nav_version = "2.10.2"
+    val room_version = "2.8.5"
+
+    // Navigation components for Fragments
+    // https://developer.android.com/guide/navigation#kts
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Room 2 (database); a new Room 3 package exists but is Kotlin-first.
+    // https://developer.android.com/jetpack/androidx/releases/room#kts
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
 }
